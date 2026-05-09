@@ -1,0 +1,8 @@
+*.class
+.idea/
+*.iml
+out/
+bin/
+*.docx
+*.pdf
+*.ps1

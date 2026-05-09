@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>BLM0121 Nesneye Yönelik Programlama - Proje Raporu</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; font-size: 11pt; line-height: 1.6; color: #1a1a1a; max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+@media print {
+  body { padding: 15mm 20mm; }
+  .page-break { page-break-before: always; }
+  pre { font-size: 8pt !important; }
+}
+h1 { font-size: 18pt; text-align: center; margin-bottom: 5px; color: #1a365d; }
+h2 { font-size: 14pt; color: #2d3748; border-bottom: 2px solid #3182ce; padding-bottom: 4px; margin: 18px 0 10px 0; }
+h3 { font-size: 12pt; color: #2d3748; margin: 12px 0 6px 0; }
+.kapak { text-align: center; margin-bottom: 30px; padding: 40px 0; }
+.kapak h1 { font-size: 22pt; margin-bottom: 10px; }
+.kapak .uni { font-size: 14pt; font-weight: 600; color: #2d3748; }
+.kapak .ders { font-size: 13pt; color: #4a5568; margin: 8px 0; }
+.kapak .bilgi { margin-top: 30px; font-size: 12pt; }
+.kapak .bilgi p { margin: 5px 0; }
+.kapak .tarih { margin-top: 20px; color: #718096; }
+.placeholder { background: #fff3cd; padding: 3px 8px; border-radius: 3px; font-weight: 600; color: #856404; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10pt; }
+th, td { border: 1px solid #cbd5e0; padding: 6px 10px; text-align: left; }
+th { background: #ebf4ff; color: #2d3748; font-weight: 600; }
+pre { background: #1a202c; color: #e2e8f0; padding: 12px; border-radius: 6px; font-size: 9pt; font-family: 'Consolas', monospace; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; margin: 8px 0; }
+.keyword { color: #63b3ed; }
+.type { color: #68d391; }
+.string { color: #fbb6ce; }
+.comment { color: #a0aec0; font-style: italic; }
+.output-box { background: #0d1117; color: #58a6ff; padding: 12px; border-radius: 6px; font-family: 'Consolas', monospace; font-size: 9pt; white-space: pre-wrap; margin: 8px 0; border-left: 4px solid #3182ce; }
+ul { margin: 6px 0 6px 20px; }
+li { margin: 3px 0; }
+p { margin: 6px 0; }
+.links { background: #f0fff4; border: 1px solid #c6f6d5; padding: 12px; border-radius: 6px; margin: 10px 0; }
+</style>
+</head>
+<body>
+
+<!-- ==================== KAPAK SAYFASI ==================== -->
+<div class="kapak">
+<p class="uni">BURSA TEKNİK ÜNİVERSİTESİ</p>
+<p class="uni">BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ</p>
+<br>
+<h1>BLM0121 Nesneye Yönelik Programlama</h1>
+<p class="ders">Proje Ödevi - Banka Otomasyon Sistemi</p>
+<div class="bilgi">
+<p><strong>Ad Soyad:</strong> <span class="placeholder">ADINIZI YAZINIZ</span></p>
+<p><strong>Öğrenci No:</strong> <span class="placeholder">NUMARANIZI YAZINIZ</span></p>
+</div>
+<p class="tarih">Mayıs 2026</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== İÇİNDEKİLER ==================== -->
+<h2>İçindekiler</h2>
+<ul>
+<li>1. Proje Tanımı</li>
+<li>2. Sınıf Yapısı ve UML Diyagramı</li>
+<li>3. Paket Yapısı</li>
+<li>4. Sınıf Açıklamaları ve Kaynak Kodlar</li>
+<li>5. Test Senaryosu ve Ekran Çıktıları</li>
+<li>6. GitHub ve YouTube Linkleri</li>
+</ul>
+
+<!-- ==================== 1. PROJE TANIMI ==================== -->
+<h2>1. Proje Tanımı</h2>
+<p>Bu projede, nesneye yönelik programlama prensipleri (kalıtım, kapsülleme, çok biçimlilik) kullanılarak bir <strong>Banka Otomasyon Sistemi</strong> geliştirilmiştir. Sistem; müşteri yönetimi, banka hesabı işlemleri (vadesiz ve yatırım hesabı), kredi kartı işlemleri ve para transferi gibi temel bankacılık operasyonlarını desteklemektedir.</p>
+<p><strong>Kullanılan NYP prensipleri:</strong></p>
+<ul>
+<li><strong>Kalıtım (Inheritance):</strong> Kisi → BankaPersoneli, Musteri | BankaHesabi → VadesizHesap, YatirimHesabi</li>
+<li><strong>Kapsülleme (Encapsulation):</strong> Tüm alanlar private, getter/setter metotları ile erişim</li>
+<li><strong>Çok biçimlilik (Polymorphism):</strong> toString() metotlarının override edilmesi, BankaHesabi referansı ile alt sınıf nesnelerine erişim</li>
+<li><strong>ArrayList kullanımı:</strong> Müşteri listesi, hesap listesi ve kredi kartı listesi</li>
+</ul>
+
+<!-- ==================== 2. SINIF YAPISI ==================== -->
+<h2>2. Sınıf Yapısı ve UML Diyagramı</h2>
+<table>
+<tr><th>Sınıf</th><th>Miras</th><th>Önemli Alanlar</th><th>Önemli Metotlar</th></tr>
+<tr><td>Kisi</td><td>-</td><td>ad, soyad, email, telefonNumarasi</td><td>toString()</td></tr>
+<tr><td>BankaPersoneli</td><td>Kisi</td><td>personelID (random), musteriler: ArrayList</td><td>musteriEkle()</td></tr>
+<tr><td>Musteri</td><td>Kisi</td><td>musteriNumarasi (random), hesaplar, krediKartlari</td><td>hesapEkle(), krediKartiEkle(), hesapSil(), krediKartiSil()</td></tr>
+<tr><td>BankaHesabi</td><td>-</td><td>iban (random), bakiye</td><td>toString()</td></tr>
+<tr><td>VadesizHesap</td><td>BankaHesabi</td><td>hesapTuru</td><td>paraTransferi(), krediKartiBorcOdeme()</td></tr>
+<tr><td>YatirimHesabi</td><td>BankaHesabi</td><td>hesapTuru</td><td>paraEkle(), paraCek()</td></tr>
+<tr><td>KrediKarti</td><td>-</td><td>kartNumarasi (random), limit, guncelBorc, kullanilabilirLimit</td><td>toString()</td></tr>
+<tr><td>BankaService</td><td>-</td><td>musteriler, personeller</td><td>musteriOlustur(), hesapAc(), paraYatir(), paraTransferiYap()...</td></tr>
+<tr><td>Main</td><td>-</td><td>-</td><td>main() - Test senaryosu</td></tr>
+</table>
+
+<!-- ==================== 3. PAKET YAPISI ==================== -->
+<h2>3. Paket Yapısı</h2>
+<pre>
+com.bank.app/
+├── people/          → Kisi.java, BankaPersoneli.java, Musteri.java
+├── accounts/        → BankaHesabi.java, VadesizHesap.java, YatirimHesabi.java
+├── cards/           → KrediKarti.java
+├── service/         → BankaService.java
+└── main/            → Main.java
+</pre>
+
+<div class="page-break"></div>
+
+<!-- ==================== 4. SINIF AÇIKLAMALARI ==================== -->
+<h2>4. Sınıf Açıklamaları ve Kaynak Kodlar</h2>
+
+<h3>4.1 Kisi.java (com.bank.app.people)</h3>
+<p>Tüm kişi türlerinin temel sınıfıdır. Ad, soyad, email ve telefon numarası alanlarını içerir.</p>
+<pre><span class="keyword">public class</span> <span class="type">Kisi</span> {
+    <span class="keyword">private</span> String ad, soyad, email;
+    <span class="keyword">private int</span> telefonNumarasi;
+
+    <span class="keyword">public</span> Kisi(String ad, String soyad, String email, <span class="keyword">int</span> telefonNumarasi) {
+        <span class="keyword">this</span>.ad = ad; <span class="keyword">this</span>.soyad = soyad;
+        <span class="keyword">this</span>.email = email; <span class="keyword">this</span>.telefonNumarasi = telefonNumarasi;
+    }
+    <span class="comment">// Getter ve Setter metotlari + toString()</span>
+}</pre>
+
+<h3>4.2 BankaPersoneli.java (com.bank.app.people)</h3>
+<p>Kisi sınıfından miras alır. personelID random olarak üretilir. Sorumlu olduğu müşterileri ArrayList ile saklar.</p>
+<pre><span class="keyword">public class</span> <span class="type">BankaPersoneli</span> <span class="keyword">extends</span> <span class="type">Kisi</span> {
+    <span class="keyword">private</span> String personelID;  <span class="comment">// Random uretilir: "P" + 6 hane</span>
+    <span class="keyword">private</span> ArrayList&lt;Musteri&gt; musteriler;
+
+    <span class="keyword">public</span> BankaPersoneli(String ad, String soyad, String email, <span class="keyword">int</span> tel) {
+        <span class="keyword">super</span>(ad, soyad, email, tel);
+        <span class="keyword">this</span>.personelID = <span class="string">"P"</span> + (100000 + random.nextInt(900000));
+        <span class="keyword">this</span>.musteriler = <span class="keyword">new</span> ArrayList&lt;&gt;();
+    }
+    <span class="keyword">public void</span> musteriEkle(Musteri musteri) { musteriler.add(musteri); }
+}</pre>
+
+<h3>4.3 Musteri.java (com.bank.app.people)</h3>
+<p>Kisi sınıfından miras alır. Hesap ve kredi kartı yönetimi yapar. hesapSil() bakiye kontrolü, krediKartiSil() borç kontrolü yapar.</p>
+<pre><span class="keyword">public class</span> <span class="type">Musteri</span> <span class="keyword">extends</span> <span class="type">Kisi</span> {
+    <span class="keyword">private</span> String musteriNumarasi;  <span class="comment">// Random: "M" + 8 hane</span>
+    <span class="keyword">private</span> ArrayList&lt;BankaHesabi&gt; hesaplar;
+    <span class="keyword">private</span> ArrayList&lt;KrediKarti&gt; krediKartlari;
+
+    <span class="keyword">public void</span> hesapEkle(String hesapTuru) {
+        <span class="comment">// "Vadesiz" ise VadesizHesap, "Yatirim" ise YatirimHesabi olusturur</span>
+    }
+    <span class="keyword">public void</span> hesapSil(BankaHesabi hesap) {
+        <span class="keyword">if</span> (hesap.getBakiye() &gt; 0) <span class="comment">// Uyari ver</span>
+        <span class="keyword">else</span> hesaplar.remove(hesap); <span class="comment">// Sil</span>
+    }
+    <span class="keyword">public void</span> krediKartiSil(KrediKarti kart) {
+        <span class="keyword">if</span> (kart.getGuncelBorc() &gt; 0) <span class="comment">// Uyari ver</span>
+        <span class="keyword">else</span> krediKartlari.remove(kart); <span class="comment">// Sil</span>
+    }
+}</pre>
+
+<h3>4.4 BankaHesabi.java (com.bank.app.accounts)</h3>
+<p>Tüm hesap türlerinin temel sınıfıdır. IBAN "TR" + 24 haneli random sayı olarak üretilir.</p>
+<pre><span class="keyword">public class</span> <span class="type">BankaHesabi</span> {
+    <span class="keyword">private</span> String iban;   <span class="comment">// Random: "TR" + 24 hane</span>
+    <span class="keyword">private double</span> bakiye;
+
+    <span class="keyword">public</span> BankaHesabi(<span class="keyword">double</span> bakiye) {
+        StringBuilder ib = <span class="keyword">new</span> StringBuilder(<span class="string">"TR"</span>);
+        <span class="keyword">for</span>(<span class="keyword">int</span> i=0; i&lt;24; i++) ib.append(random.nextInt(10));
+        <span class="keyword">this</span>.iban = ib.toString();
+        <span class="keyword">this</span>.bakiye = bakiye;
+    }
+}</pre>
+
+<h3>4.5 VadesizHesap.java (com.bank.app.accounts)</h3>
+<p>BankaHesabi'dan miras alır. Para transferi ve kredi kartı borç ödeme işlemlerini gerçekleştirir.</p>
+<pre><span class="keyword">public class</span> <span class="type">VadesizHesap</span> <span class="keyword">extends</span> <span class="type">BankaHesabi</span> {
+    <span class="keyword">public void</span> paraTransferi(BankaHesabi alici, BankaHesabi gonderen, <span class="keyword">double</span> miktar) {
+        gonderen.setBakiye(gonderen.getBakiye() - miktar);
+        alici.setBakiye(alici.getBakiye() + miktar);
+    }
+    <span class="keyword">public void</span> krediKartiBorcOdeme(KrediKarti kart, <span class="keyword">double</span> miktar) {
+        setBakiye(getBakiye() - miktar);
+        kart.setGuncelBorc(kart.getGuncelBorc() - miktar);
+    }
+}</pre>
+
+<h3>4.6 YatirimHesabi.java (com.bank.app.accounts)</h3>
+<p>BankaHesabi'dan miras alır. Para ekleme ve para çekme işlemlerini destekler.</p>
+<pre><span class="keyword">public class</span> <span class="type">YatirimHesabi</span> <span class="keyword">extends</span> <span class="type">BankaHesabi</span> {
+    <span class="keyword">public void</span> paraEkle(<span class="keyword">double</span> miktar) { setBakiye(getBakiye() + miktar); }
+    <span class="keyword">public void</span> paraCek(<span class="keyword">double</span> miktar) {
+        <span class="keyword">if</span>(getBakiye() &gt;= miktar) setBakiye(getBakiye() - miktar);
+    }
+}</pre>
+
+<h3>4.7 KrediKarti.java (com.bank.app.cards)</h3>
+<p>Kredi kartı bilgilerini yönetir. Kart numarası 16 haneli random sayı olarak üretilir. Borç değiştiğinde kullanılabilir limit otomatik güncellenir.</p>
+<pre><span class="keyword">public class</span> <span class="type">KrediKarti</span> {
+    <span class="keyword">private</span> String kartNumarasi; <span class="comment">// Random 16 hane</span>
+    <span class="keyword">private double</span> limit, guncelBorc, kullanilabilirLimit;
+
+    <span class="keyword">public</span> KrediKarti(<span class="keyword">double</span> limit, <span class="keyword">double</span> guncelBorc) {
+        <span class="keyword">this</span>.kullanilabilirLimit = limit - guncelBorc;
+    }
+    <span class="keyword">public void</span> setGuncelBorc(<span class="keyword">double</span> borc) {
+        <span class="keyword">this</span>.guncelBorc = borc;
+        <span class="keyword">this</span>.kullanilabilirLimit = <span class="keyword">this</span>.limit - borc; <span class="comment">// Otomatik guncelle</span>
+    }
+}</pre>
+
+<h3>4.8 BankaService.java (com.bank.app.service)</h3>
+<p>İş mantığı katmanıdır. Tüm bankacılık operasyonlarını merkezi olarak yönetir: müşteri/personel oluşturma, hesap açma, para yatırma, transfer, kredi kartı tanımlama, borç ödeme, hesap/kart silme.</p>
+
+<div class="page-break"></div>
+
+<!-- ==================== 5. TEST SENARYOSU ==================== -->
+<h2>5. Test Senaryosu ve Ekran Çıktıları</h2>
+<p>Main sınıfında aşağıdaki senaryolar sırasıyla test edilmiştir:</p>
+<ol>
+<li>İki müşteri oluşturma (Ahmet Yılmaz, Ayşe Demir)</li>
+<li>Personel oluşturma ve müşteri atama</li>
+<li>Müşteri 1'e vadesiz + yatırım hesabı, Müşteri 2'ye vadesiz hesap açma</li>
+<li>Hesaplara para yatırma (5000, 10000, 3000 TL)</li>
+<li>Müşteri 1 → Müşteri 2 arası 1500 TL transfer</li>
+<li>Kredi kartı tanımlama (15000 ve 10000 TL limitli)</li>
+<li>Kredi kartı borç ödeme (1000 TL)</li>
+<li>Bakiye kontrolü ile hesap silme (önce uyarı, sonra başarılı)</li>
+<li>Borç kontrolü ile kredi kartı silme (uyarı)</li>
+</ol>
+
+<h3>Ekran Çıktısı:</h3>
+<div class="output-box">========================================
+    BANKA OTOMASYON SISTEMI
+========================================
+
+*** 1. MUSTERI OLUSTURMA ***
+
+--- Yeni Musteri Olusturuldu ---
+=== Musteri Bilgileri ===
+Musteri No: M49212567
+Ad: Ahmet, Soyad: Yilmaz, Email: ahmet@email.com, Telefon: 551234567
+Hesap Sayisi: 0
+Kredi Karti Sayisi: 0
+
+--- Yeni Musteri Olusturuldu ---
+=== Musteri Bilgileri ===
+Musteri No: M97376251
+Ad: Ayse, Soyad: Demir, Email: ayse@email.com, Telefon: 559876543
+Hesap Sayisi: 0
+Kredi Karti Sayisi: 0
+
+*** 2. PERSONEL OLUSTURMA ***
+
+--- Yeni Personel Olusturuldu ---
+=== Banka Personeli ===
+Personel ID: P438725
+Ad: Mehmet, Soyad: Kaya, Email: mehmet@banka.com, Telefon: 554443322
+Sorumlu Musteri Sayisi: 0
+
+--- Personele Musteri Atama ---
+Musteri 'Ahmet Yilmaz' personel 'Mehmet Kaya' sorumluluguna eklendi.
+Musteri 'Ayse Demir' personel 'Mehmet Kaya' sorumluluguna eklendi.
+
+*** 3. HESAP ACMA ***
+
+--- Hesap Acma Islemi ---
+Vadesiz hesap basariyla olusturuldu. IBAN: TR664007518973964032736739
+
+--- Hesap Acma Islemi ---
+Yatirim hesabi basariyla olusturuldu. IBAN: TR883416066194472760123281
+
+--- Hesap Acma Islemi ---
+Vadesiz hesap basariyla olusturuldu. IBAN: TR163524929839498994087247
+
+*** 4. HESABA PARA YATIRMA ***
+
+--- Para Yatirma Islemi ---
+Hesaba 5000,00 TL yatirildi.
+Yeni bakiye: 5000,00 TL
+
+--- Para Yatirma Islemi ---
+Yatirim hesabina 10000,00 TL eklendi.
+Yeni bakiye: 10000,00 TL
+
+--- Para Yatirma Islemi ---
+Hesaba 3000,00 TL yatirildi.
+Yeni bakiye: 3000,00 TL
+
+*** 5. PARA TRANSFERI ***
+
+--- Para Transferi ---
+Para transferi basarili!
+Gonderen IBAN: TR664007518973964032736739 -> Yeni Bakiye: 3500,00 TL
+Alici IBAN: TR163524929839498994087247 -> Yeni Bakiye: 4500,00 TL
+
+*** 6. KREDI KARTI TANIMLAMA ***
+
+--- Kredi Karti Tanimlama ---
+Kredi karti basariyla tanimlandi. Kart No: 5753413137572288, Limit: 15000,00 TL
+
+--- Kredi Karti Tanimlama ---
+Kredi karti basariyla tanimlandi. Kart No: 3833203039065878, Limit: 10000,00 TL
+
+--- Kredi Kartina Harcama Simulasyonu ---
+Musteri 1 kredi karti borcu: 2500,00 TL
+Kullanilabilir limit: 12500,00 TL
+
+*** 7. KREDI KARTI BORC ODEME ***
+
+--- Kredi Karti Borc Odeme ---
+Kredi karti borc odemesi basarili!
+Odenen miktar: 1000,00 TL
+Kalan hesap bakiyesi: 2500,00 TL
+Kalan kart borcu: 1500,00 TL
+
+*** 8. HESAP SILME ***
+>> Bakiyesi olan hesabi silmeye calisiyoruz:
+
+--- Hesap Silme Islemi ---
+Lutfen oncelikle bakiyenizi baska bir hesaba aktariniz. (Mevcut bakiye: 10000,00 TL)
+
+>> Once bakiyeyi sifirliyoruz:
+Yatirim hesabindan 10000,00 TL cekildi.
+Yeni bakiye: 0,00 TL
+
+>> Bakiye sifirlandi, tekrar silmeye calisiyoruz:
+
+--- Hesap Silme Islemi ---
+Hesap basariyla silindi. IBAN: TR883416066194472760123281
+
+*** 9. KREDI KARTI SILME ***
+>> Borcu olan kredi kartini silmeye calisiyoruz:
+
+--- Kredi Karti Silme ---
+Lutfen oncelikle borc odemesi yapiniz. (Mevcut borc: 1500,00 TL)
+
+*** 10. OZET BILGILER ***
+
+=== Musteri Bilgileri ===
+Musteri No: M49212567
+Ad: Ahmet, Soyad: Yilmaz, Email: ahmet@email.com, Telefon: 551234567
+Hesap Sayisi: 1, Kredi Karti Sayisi: 1
+
+=== Musteri Bilgileri ===
+Musteri No: M97376251
+Ad: Ayse, Soyad: Demir, Email: ayse@email.com, Telefon: 559876543
+Hesap Sayisi: 1, Kredi Karti Sayisi: 1
+
+=== Banka Personeli ===
+Personel ID: P438725
+Ad: Mehmet, Soyad: Kaya, Email: mehmet@banka.com, Telefon: 554443322
+Sorumlu Musteri Sayisi: 2
+
+========================================
+    PROGRAM SONA ERDI
+========================================</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 6. LINKLER ==================== -->
+<h2>6. GitHub ve YouTube Linkleri</h2>
+<div class="links">
+<p><strong>GitHub Repository:</strong> <span class="placeholder">GITHUB LINKİNİZİ BURAYA YAZINIZ</span></p>
+<p><strong>YouTube Video:</strong> <span class="placeholder">YOUTUBE LİNKİNİZİ BURAYA YAZINIZ</span></p>
+</div>
+
+<h2>7. Sonuç</h2>
+<p>Bu projede nesneye yönelik programlama prensipleri (kalıtım, kapsülleme, çok biçimlilik) kullanılarak bir banka otomasyon sistemi başarıyla geliştirilmiştir. Proje kapsamında 9 sınıf, 5 paket altında organize edilmiştir. Tüm sınıflar UML diyagramına uygun şekilde tasarlanmış, random ID üretimi, ArrayList kullanımı, hesap/kart silme kontrolleri gibi gereksinimler eksiksiz olarak karşılanmıştır.</p>
+
+</body>
+</html>
